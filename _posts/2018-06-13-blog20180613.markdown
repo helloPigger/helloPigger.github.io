@@ -1,0 +1,203 @@
+---
+layout:     post
+title:      "[学无止境] github pages + Jekyll windows环境下创建个人博客"
+date:       2018-06-13 12:00:00
+author:     "朱小猪V5"
+header-img: "img/20180613/bg1.jpg"
+tags:
+    - 学无止境
+---
+
+# 前提
+设备环境:win7旗舰版 64位
+已经有 <yourname>.github.io 地址,如我的:helloPigger.github.io
+(注:一定是<yourname>.github.io`)
+
+![图片描述][1]
+
+# 步骤
+### 安装Ruby+Devkit 
+下载地址:https://rubyinstaller.org/downloads/
+我选的 Ruby+Devkit 2.4.4-1(x64), 也是官网推荐的版本
+
+
+`注:看了很多文章都是先安装ruby再安装Devkit,我直接安装的Ruby+Devkit,很方便很简单`
+
+直接"下一步"安装即可,最后一步记得勾选Run 'ridk install' to setup MSYS2:
+![图片描述][2]
+
+
+点击Finish,跳到cmd命令窗口，输入3：
+![图片描述][3]
+
+
+到这儿，ruby安装完成。检查是否安装成功:
+```
+ruby -v
+gem -v
+```
+
+### 安装jekyll
+```
+gem install jekyll
+```
+检查是否安装成功：`jekyll -v`
+
+### 创建blog
+```
+jekyll new zwjBlog
+```
+zwjBlog下的文件:
+![图片描述][4]
+_posts文件夹，文章默认的存放位置<br>
+_site文件夹，默认的转化结果存放位置<br>
+.gitignore文件，git将忽略该文件中列出的文件或文件夹<br>
+_config.yml文件，jekyll模板引擎的配置文件，修改之后需要重启服务<br>
+index.md文件，默认的主页<br>
+
+
+`注:不要自己手动建zwjBlog文件夹,一定要用 jekyll new zwjBlog 命令创建`
+
+然后运行jekyll serve,这是最后一步,也是出现问题最多的一步,我把自己遇到的问题按照顺序整理了出来(见下一节)
+# 问题总结
+**1. 第一次运行jekyll serve时出现的错误**
+```
+C:/Ruby24-x64/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:55:in `require': cannot load such file -- bundler (LoadError)
+    from C:/Ruby24-x64/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+    from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/jekyll-3.8.3/lib/jekyll/plugin_manager.rb:48:in `require_from_bundler'
+    from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/jekyll-3.8.3/exe/jekyll:11:in `<top (required)>'
+    from C:/Ruby24-x64/bin/jekyll:23:in `load'
+    from C:/Ruby24-x64/bin/jekyll:23:in `<main>'
+  ```
+![图片描述][5]
+
+
+**问题原因:**
+缺少bundler<br>
+**解决方法:**
+安装bundler: `gem install bundler`<br>
+
+**2. 安装好bundler后运行`jekyll serve`仍报错**
+```
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/resolver.rb:28
+9:in `block in verify_gemfile_dependencies_are_found!': Could not find gem 'mini
+ma (~> 2.0) x64-mingw32' in any of the gem sources listed in your Gemfile. (Bund
+ler::GemNotFound)
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/r
+esolver.rb:257:in `each'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/r
+esolver.rb:257:in `verify_gemfile_dependencies_are_found!'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/r
+esolver.rb:48:in `start'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/r
+esolver.rb:22:in `resolve'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/d
+efinition.rb:258:in `resolve'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/d
+efinition.rb:171:in `specs'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/d
+efinition.rb:238:in `specs_for'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/d
+efinition.rb:227:in `requested_specs'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/r
+untime.rb:108:in `block in definition_method'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler/r
+untime.rb:20:in `setup'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib/bundler.r
+b:107:in `setup'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/jekyll-3.8.3/lib/jekyll/plug
+in_manager.rb:50:in `require_from_bundler'
+        from C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/jekyll-3.8.3/exe/jekyll:11:i
+n `<top (required)>'
+        from C:/Ruby24-x64/bin/jekyll:23:in `load'
+        from C:/Ruby24-x64/bin/jekyll:23:in `<main>'
+```    
+![图片描述][6]   
+
+
+**问题原因:**
+没有Bundler (Bundler::GemNotFound)<br>
+**解决方法:**
+切到zwjBlog路径下,执行命令: `bundle install` <br> 
+
+`注:1. bundle install 的安装过程可能会很长,耐心等待  2. bundle install执行之前需要先执行 gem install bundler(即上一个问题),否则会报错`
+
+
+**3. 执行jekyll serve时提示 Please add the following to your Gemfile to avoid polling for changes: gem 'wdm', '>= 0.1.0' if Gem.win_platform?**
+![图片描述][7]
+
+**解决方法:**
+安装wdm:`gem install wdm`
+
+
+# 本地运行
+把问题一个个突破后,运行`jekyll serve`你将拥有一个本地的网站啦,访问:http://127.0.0.1:4000<br>
+默认端口号4000<br>
+也可以运行`jekyll serve --watch`,可监听修改内容<br>
+![图片描述][8]
+
+
+# jekll模板
+搭建网站最快的方法是用别人的模板,我用的黄玄的。[模板下载地址](https://github.com/Huxpro/huxpro.github.io)
+### jekyll模板与github pages关联
+到这儿我们有两个地址,一个是本地的http://127.0.0.1:4000, 
+另一个是远程地址helloPigger.github.io 
+这两个地址如何关联起来?
+其实很简单,只需要两步.
+
+**1. 仓库文件clone到本地**
+我用的github desktop工具,不用写命令,而且不容易出错.
+clone到本地的zwjBlog
+
+**2. 使用jekyll模板**
+删除zwjBlog文件夹下所有文件(**.git文件需保留**),
+将下载的模板文件夹下的内容拷贝到zwjBlog中.
+然后直接push到远程仓库.
+我的出现了报错:
+![图片描述][9]
+
+
+解决方法,安装jekyll-paginate: `gem install jekyll-paginate`
+
+push代码后重新访问helloPigger.github.io ,模板内容出现了!
+但是, 排版样式没有.<br>
+解决方法: 修改配置文件config.yml下的baseurl<br>
+我的目录结构是: zwjBlog> _config.yml
+因此baseurl: "/zwjBlog"
+其它的修改项都可以百度google到.
+
+# 绑定个人域名
+第一步: 购买域名,我在阿里云买的<br>
+第二步: 添加域名解析<br>
+ping博客地址(我的地址为heloPigger.github.io),得到一个ip,用作我们要绑定的域名的A记录，
+
+![图片描述][10]
+
+添加A记录到185.199.110.153
+添加cname记录到博客地址 heloPigger.github.io
+![图片描述][11]
+[参考地址](https://blog.csdn.net/u012782626/article/details/47999691)<br>
+然后修改模板中的cname为自己的域名:hightop.top (注: 没有http)<br>
+修改config.yml文件,必须修改的字段:
+```
+url: "https://hightop.top"  
+ga_domain: hightop.top
+```
+
+将最新代码上传到远程,此时远程博客地址修改为: http://hightop.top/ , 域名绑定成功.
+至此,网站搭建完成,在_post文件下开始写自己的博客吧.
+![图片描述][12]
+
+
+  [1]: /img/20180613/1.png
+  [2]: /img/20180613/2.png
+  [3]: /img/20180613/3.png
+  [4]: /img/20180613/4.png
+  [5]: /img/20180613/5.png
+  [6]: /img/20180613/6.png
+  [7]: /img/20180613/7.png
+  [8]: /img/20180613/8.png
+  [9]: /img/20180613/9.png
+  [10]: /img/20180613/10.png
+  [11]: /img/20180613/11.png
+  [12]: /img/20180613/12.png

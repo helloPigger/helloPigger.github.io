@@ -1,0 +1,135 @@
+---
+layout:     post
+title:      "[学无止境] vue中使用less、scss、stylus"
+date:       2018-07-18 12:00:00
+author:     "朱小猪V5"
+header-img: "img/20180613/bg1.jpg"
+tags:
+    - 学无止境
+---
+
+### 安装与引入
+*说明：sass从第三代开始放弃了缩进式风格，并且完全向下兼容普通的css代码，这一代的sass也被称为scss*
+
+**less**
+```
+//需安装 less、 less-loader
+npm i less less-loader --save-dev
+
+//style引入
+<style lang=”less”></style>
+
+//文件引入
+@import './index.less'
+```
+
+**scss**
+```
+//需安装node-sass、 sass-loader
+npm i node-sass sass-loader --save-dev
+
+//style引入
+<style lang=”scss”></style>
+
+//文件引入
+@import './index.scss'
+```
+**stylus**
+```
+//需安装 stylus 、 stylus-loader
+npm i stylus stylus-loader --save-dev
+
+//style引入
+<style lang=”stylus”></style>
+
+//文件引入
+@import './index.styl'
+```
+
+### 基本语法使用
+
+语法举例：
+```
+/* style.less */
+h1 {
+  color: #0982C1;
+}
+```
+
+```
+
+/* style.scss  */
+h1 {
+  color: #0982C1;
+}
+```
+
+```
+/* style.styl */
+h1 {
+  color: #0982C1;
+}
+
+h1
+  color: #0982C1;
+
+h1
+  color #0982C1
+```
+继承举例：
+```
+//style.less
+.message {
+  color: #333;
+}
+.success {
+  .message;
+  border-color: green;
+}
+```
+
+```
+//style.scss 
+.message {
+  color: #333;
+}
+.success {
+  @extend .message; //@extend
+  border-color: green;
+}
+```
+mixin举例:
+```
+//style.less
+.error(@borderWidth: 2px) {
+  border: @borderWidth solid #F00;
+}
+.login-error {
+  left: 12px;
+  .error(5px); // border:5px solid #F00;
+}
+```
+```
+//style.scss
+@mixin error($borderWidth: 2px) {
+  border: $borderWidth solid #F00;
+}
+.login-error {
+  left: 12px;
+  @include error(5px); // @include  border:5px solid #F00;
+}
+```
+```
+//style.styl
+error(borderWidth= 2px) {
+  border: borderWidth solid #F00;
+}
+.login-error {
+  left: 12px;
+  error(5px);  // border:5px solid #F00;
+}
+```
+### 参考文章
+看了这两篇文章很收益，做了以上简单总结， 需要学习的可以直接读文章原文。
+[https://blog.csdn.net/pedrojuliet/article/details/72887490](https://blog.csdn.net/pedrojuliet/article/details/72887490)<br>
+[http://www.511yj.com/css-less-sass.html](http://www.511yj.com/css-less-sass.html)<br>
