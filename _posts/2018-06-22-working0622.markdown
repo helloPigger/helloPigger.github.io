@@ -1,0 +1,23 @@
+---
+layout:     post
+title:      "[工作] 两周用vue写一个后台"
+date:       2018-06-22 12:00:00
+author:     "朱小猪V5"
+header-img: "img/home-bg1.jpg"
+tags:
+    - 工作
+---
+
+>今天看到一篇文章, 甚是喜欢, 甚是膜拜. 自己对vue的学习还是太单薄. 
+>所以再练习一个项目.
+
+
+**在这里记录每天的学习进度,督促学习效率**
+<br>
+- 第一天:发现项目
+<br>
+资源地址:
+https://segmentfault.com/a/1190000009188689
+<br>
+完整项目地址：
+vue-element-admin
